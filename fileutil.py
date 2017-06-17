@@ -19,20 +19,19 @@ def getfilesfromdir(directory, depth):
     # depth is the level to dig, 0 is cwd, 1 is first subdirectory
     file_paths = []
     i = 0
-    depth
     for root, directories, files in os.walk(directory):
         for filename in files:
             # Join the two strings in order to form the full filepath.
             filepath = os.path.join(root, filename)
             file_paths.append(filepath)  # Add it to the list.
-        i += 1
-        if i > depth:
+        if i >= depth:
             break
     return (file_paths)
 
 
 def main():
-    getfilesfromdir("/Users/mark/PycharmProjects/fileutils", 0)
+    filestoprocess = getfilesfromdir("/Users/mark", 3)
+    print filestoprocess
     return
 
 

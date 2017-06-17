@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # Handy file utils
 
+import os
+
 
 class myfile(object):
     def __init__(self):
@@ -12,8 +14,14 @@ class myfile(object):
         print "get size"
 
 
-def main():
+def getfilesfromdir(directory):
+    print directory
 
+    return
+
+
+def main():
+    getfilesfromdir()
     return
 
 

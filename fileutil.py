@@ -30,7 +30,7 @@ def getfilesfromdir(directory, depth):
 
 
 def main():
-    filestoprocess = getfilesfromdir("/Users/mark", 3)
+    filestoprocess = getfilesfromdir(".", 0)
     print filestoprocess
     return
 

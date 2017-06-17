@@ -5,14 +5,23 @@ import os
 
 
 class myfile(object):
-    def __init__(self):
-        self.name = filename
-        self.size = 0
+    def __init__(self, path):
+        self.filename = path
         self.type = ""
+        self.filesize = os.path.getsize(self.filename)
+        self.last_modification_time = os.path.getmtime(self.filename)
+        self.last_access_time = os.path.getatime(self.filename)
+        self.creation_time = os.path.getctime(self.filename)
 
-    def getsize(self):
-        print "get size"
+    def printsize(self):
+        print "file : " + self.filename + " : has size = " + str(self.filesize)
 
+    def printattribs(self):
+        print self.filename
+        print self.filesize
+        print self.last_modification_time
+        print self.last_access_time
+        print self.creation_time
 
 def getfilesfromdir(directory, depth):
     # directory - the starting directory to be scanned for files
@@ -30,8 +39,11 @@ def getfilesfromdir(directory, depth):
 
 
 def main():
+    files = []
     filestoprocess = getfilesfromdir(".", 0)
-    print filestoprocess
+    for file in filestoprocess:
+        files.append(myfile(file))
+    files[0].printattribs()
     return
 
 

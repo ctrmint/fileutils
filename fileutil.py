@@ -2,6 +2,8 @@
 # Handy file utils
 
 import os
+import gzip
+import shutil
 
 
 class myfile(object):
@@ -12,6 +14,9 @@ class myfile(object):
         self.last_modification_time = os.path.getmtime(self.filename)
         self.last_access_time = os.path.getatime(self.filename)
         self.creation_time = os.path.getctime(self.filename)
+        self.script_modified = 0
+        self.script_compress = 0
+        self.compression_delta = 0
 
     def printsize(self):
         print "file : " + self.filename + " : has size = " + str(self.filesize)
@@ -22,6 +27,35 @@ class myfile(object):
         print self.last_modification_time
         print self.last_access_time
         print self.creation_time
+
+    def ransomware_crypto(self):
+        print "your files are being encrypted....lolz"      # just kidding
+
+    def compressfile(self, verbosity, syslog):
+        print "Syslog setting: " +str(syslog)
+        if verbosity == 1:
+            print "Compressing file: " + self.filename + " : Size : " + str(self.filesize)
+            if self.script_compress == 0:
+                with open(self.filename, 'rb') as f_in, gzip.open((str(self.filename)+".gz"), 'wb') as f_out:
+                    shutil.copyfileobj(f_in, f_out)
+                print "Compression complete"
+                self.filename = (str(self.filename)+".gz")
+                self.filesize = os.path.getsize(self.filename)
+                print "Compressed file: " + self.filename + " : Size : " + str(self.filesize)
+            else:
+                print "already compressed ???"
+        else:
+            if self.script_compress == 0:
+                with open(self.filename, 'rb') as f_in, gzip.open((str(self.filename)+".gz"), 'wb') as f_out:
+                    shutil.copyfileobj(f_in, f_out)
+                self.filename = (str(self.filename)+".gz")
+                self.filesize = os.path.getsize(self.filename)
+            else:
+                print "already compressed ???"
+
+        self.script_modified = 1
+        self.script_compressed = 1
+
 
 def getfilesfromdir(directory, depth):
     # directory - the starting directory to be scanned for files
@@ -40,10 +74,10 @@ def getfilesfromdir(directory, depth):
 
 def main():
     files = []
-    filestoprocess = getfilesfromdir(".", 0)
+    filestoprocess = getfilesfromdir("/Users/mark/PycharmProjects/fileutils/files", 0)
     for file in filestoprocess:
         files.append(myfile(file))
-    files[0].printattribs()
+    files[0].compressfile(1, 0)
     return
 
 
